@@ -1,16 +1,28 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import moment from 'moment';
 
 var Hello = React.createClass({
+    propTypes:{
+        // name:React.PropTypes.string.isRequired
+    },
     render: function () {
-        var m = moment().format();
-        return <div style="color:red;">Hello {this.props.name}-{m}这是什么？What this 123</div>;
+        return <div>
+            {
+                React.Children.map(this.props.children,function(child){
+                    return child;
+                })
+            }
+        </div>;
     }
 });
-
+var name = "123";
 ReactDom.render(
-    <Hello name="World" />,
+    <Hello name={{name}}>
+        <ul>
+            <li>123</li>
+            <li>456</li>
+        </ul>
+    </Hello>,
     document.getElementById('AppRoot')
 );
 
