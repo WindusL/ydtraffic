@@ -2,28 +2,40 @@ import React from 'react';
 import ReactDom from 'react-dom';
 
 var Hello = React.createClass({
-    propTypes:{
-        // name:React.PropTypes.string.isRequired
+    etInitialState:function(){
+        return {
+            opacity : 1.0,
+            fontSize : 10
+        }
     },
-    render: function () {
-        return <div>
-            {
-                React.Children.map(this.props.children,function(child){
-                    return child;
-                })
+    componentDidMount : function(){
+        this.timer = setInterval(function(){
+            var opacity = this.state.opacity;
+            var fontSize = this.state.fontSize;
+            opacity -= .05;
+            fontSize += 1;
+            if(opacity <= 0.1){
+                opacity = 1.0
             }
-        </div>;
+            if(fontSize >= 20){
+                fontSize = 10;
+            }
+            this.setState({
+                opacity : opacity,
+                fontSize : fontSize
+            });
+        }.bind(this),100);
+    },
+    render : function(){
+        return (
+            <div styles="{{font-size:this.state.fontSize + 'em'}}">
+                Hello {this.props.name}
+            </div>
+        );
     }
 });
-var name = "123";
-ReactDom.render(
-    <Hello name={{name}}>
-        <ul>
-            <li>123</li>
-            <li>456</li>
-        </ul>
-    </Hello>,
+
+ReactDom.render(  
+   <Hello name="world"/> ,
     document.getElementById('AppRoot')
 );
-
-

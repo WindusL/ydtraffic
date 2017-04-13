@@ -1,6 +1,7 @@
 #自定义配置
 config/mycofig.js
-＃config/default.js
+config/default.js
+dist/*
 
 # Logs
 logs
