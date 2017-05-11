@@ -33,7 +33,7 @@ module.exports = (options = {}) => {
             webpack当遇到import ... 时, 会调用这里配置的loader对引用的文件进行编译
             */
             rules: [{
-                    test: /\.js$/,
+                    test: /\.js[x]?$/,
                     enforce: "pre",
                     loader: 'eslint-loader'
                 },
@@ -42,7 +42,7 @@ module.exports = (options = {}) => {
                     使用babel编译ES6/ES7/ES8为ES5代码
                     使用正则表达式匹配后缀名为.js的文件
                     */
-                    test: /\.js$/,
+                    test: /\.js[x]?$/,
 
                     // 排除node_modules目录下的文件, npm安装的包不需要编译
                     exclude: /node_modules/,
@@ -257,11 +257,13 @@ module.exports = (options = {}) => {
         performance: {
             hints: options.dev ? false : 'warning'
         },
-        // 定义一个路径别名(alias) import b from '../../../components/b' 变为import b from '~/components/b'
         resolve: {
+            // 定义一个路径别名(alias) import b from '../../../components/b' 变为import b from '~/components/b'
             alias: {
                 '~': `${__dirname}/src`
-            }
+            },
+            // 现在你import文件的时候可以直接使用import Func from './file'，不用再使用import Func from './file.js'
+            extensions: ['.js', '.jsx', '.json', '.coffee']
         }
     }
 };
